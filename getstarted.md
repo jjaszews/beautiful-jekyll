@@ -39,6 +39,7 @@ Note that in the video above only one setting in the `_config.yml` file is edite
 
 </div>
 
+
 ### 4. Congratulations! You have a website!
 
 After you save your changes to the `_config.yml` file (by clicking on *Commit changes* as the video tutorial shows), your website should be ready in a minute or two at `https://<yourusername>.github.io`. Every time you make a change to any file, your website will get rebuilt and should be updated in about a minute or so. Your website will be initialized with several sample blog posts and a couple other pages.
@@ -179,7 +180,7 @@ ext-css      | List of external CSS files to include in the page. External CSS f
 .gs-section-03 h3 { 
    color: green }
    
-   .gs-section-0 p {
+   .gs-section-03 p {
      font-size: 30px;
 }
 
