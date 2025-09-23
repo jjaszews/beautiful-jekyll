@@ -18,8 +18,8 @@ navbar-links:
   Resources:
     - Beautiful Jekyll: ""
     - Learn markdown: ""
-    - Getting Started: "getstarted"  
-    Author's home: ""
+    - Getting Started: "getstarted"
+  "Author's home": ""
 
 # --- Logo --- #
 
@@ -41,11 +41,12 @@ round-avatar: true
 # Uncomment the links you want to show and add your information to each one.
 social-network-links:
   email: "jen.bevins@asu.edu"
-  facebook: 
+  facebook:
   github: jjaszews
-  twitter: 
-  patreon: 
-  youtube: c/jenniferbevins4455
+  twitter:
+  patreon:
+  youtube: "c/jenniferbevins4455"
+  google-scholar: "https://scholar.google.com/citations?user=aQw-XJwAAAAJ&hl=en&inst=1960582506653781529"
 #  medium: yourname
 #  reddit: yourname
 #  linkedin: daattali
@@ -62,7 +63,6 @@ social-network-links:
 #  calendly: yourname
 #  mastodon: instance.url/@username
 #  ORCID: your ORCID ID
- google-scholar: "https://scholar.google.com/citations?user=aQw-XJwAAAAJ&hl=en&inst=1960582506653781529"
 
 # If you want to show a link to an RSS in the footer, add the site description here.
 # If you don't want to show an RSS link, remove the following line.
@@ -104,9 +104,9 @@ navbar-col: "#FF7F50"
 navbar-text-col: "#008B8B"
 navbar-border-col: "#DDDDDD"
 page-col: "#00008B"
-text-col: "000000"
+text-col: "#000000"
 link-col: "#F8F8FF"
-hover-col: "##FF7F50"
+hover-col: "#FF7F50"
 footer-col: "#FF7F50"
 footer-text-col: "#777777"
 footer-link-col: "#008B8B"
