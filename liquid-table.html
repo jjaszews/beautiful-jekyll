@@ -1,310 +1,79 @@
 ---
-layout: nice-text
+layout: default   <!-- parent layout -->
 ---
-  
-{{ content }}
 
+<div class="liquid-table-wrapper">
+  {% if page.title %}<h1>{{ page.title }}</h1>{% endif %}
 
+  <!-- Render the page content (image + text from the .md file) -->
+  <div class="page-content">
+    {{ content }}
+  </div>
 
+  <!-- Build a comparison table from front matter -->
+  {% if page.reynolds or page.gosling %}
+  <h2>Comparison</h2>
 
-<h2> Ryan vs Ryan: Liquid Table Demo </h2>
+  <!-- Strengths -->
+  {% assign r_str = page.reynolds.strengths | size %}
+  {% assign g_str = page.gosling.strengths | size %}
+  {% if r_str > g_str %}
+    {% assign max_str = r_str %}
+  {% else %}
+    {% assign max_str = g_str %}
+  {% endif %}
 
-<table id="ryan-v-ryan">
-
-<thead>
-  <tr>
-    <th>  <h3>  Ryan Reynolds  </h3>  </th>
-    <th>  <h3>  Ryan Gosling  </h3>  </th>
-  </tr>
-</thead>
-
-<tbody>
-
-<tr>
-  
-  
-  <td>
-  
-    
-    <h4>  Strengths  </h4>
-    <ul>
-      
-      {% for item in page.reynolds.strengths %}
-         <li>{{ item }}</li>
+  <h3>Strengths</h3>
+  <table class="liquid-table">
+    <thead>
+      <tr>
+        <th>Ryan Reynolds</th>
+        <th>Ryan Gosling</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for i in (0..max_str | minus: 1) %}
+      <tr>
+        <td>{{ page.reynolds.strengths[i] | default: "" }}</td>
+        <td>{{ page.gosling.strengths[i]  | default: "" }}</td>
+      </tr>
       {% endfor %}
-      
-    </ul>
-    
-    <br>
+    </tbody>
+  </table>
 
-    <h4>  Weaknessess  </h4>
-    <ul>
-      
-      {% for item in page.reynolds.weaknesses %}
-         <li>{{ item }}</li>
+  <!-- Weaknesses -->
+  {% assign r_weak = page.reynolds.weaknesses | size %}
+  {% assign g_weak = page.gosling.weaknesses | size %}
+  {% if r_weak > g_weak %}
+    {% assign max_weak = r_weak %}
+  {% else %}
+    {% assign max_weak = g_weak %}
+  {% endif %}
+
+  <h3>Weaknesses</h3>
+  <table class="liquid-table">
+    <thead>
+      <tr>
+        <th>Ryan Reynolds</th>
+        <th>Ryan Gosling</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for i in (0..max_weak | minus: 1) %}
+      <tr>
+        <td>{{ page.reynolds.weaknesses[i] | default: "" }}</td>
+        <td>{{ page.gosling.weaknesses[i]  | default: "" }}</td>
+      </tr>
       {% endfor %}
-      
-    </ul>  
-    
-    
-  </td>
-  
-
-
-  <td>
-  
-    <h4>  Strengths  </h4>
-    <ul>
-      
-      {% for item in page.gosling.strengths %}
-        <li>{{ item }}</li>
-      {% endfor %}
-      
-    </ul>
-    
-    <br>
-    
-    <h4>  Weaknessess  </h4>
-    <ul>
-      
-      {% for item in page.gosling.weaknesses %}
-         <li>{{ item }}</li>
-      {% endfor %}
-      
-    </ul>
-
-  </td>
-</tr> 
-
-</table>
-
-
-<br>
-
-<hr>
-
-<br>
-
-
-<blockquote>
-<pre>
-<code>
-
-    ###
-    ###  LAYOUT INHERITANCE
-    ###
-    ###  pages built by adding elements 
-    ###  to other page layouts 
-    ###
-
-          default.html layout 
-          │
-          └── nice-text.html layout 
-              │
-              └── liquid-table.html layout
-                  # see liquid table below
-
-
-
-          ###
-          ###  default.html layout
-          ###
-
-          &lt;html>
-          &lt;head>
-            &lt;body>                                
-              &lt;header>   
-
-              &lbrace;&lbrace; content }}     
-
-              &lt;footer>           
-            &lt;/body>  
-          &lt;/html>     
-
-          ###
-          ###  &lbrace;&lbrace;content}}
-          ###  is replaced by
-          ###  whatever content
-          ###  is on the page that
-          ###  uses the default.html 
-          ###  template 
-          ###
-
-
-
-          ###
-          ### nice-text.html layout
-          ###
-
-          ---
-          layout: default
-          ---
-
-          &lt;div class="pretty-text">
-
-          &lt;h1> &lbrace;&lbrace; page.title }} &lt;/h1>
-
-          &lbrace;&lbrace; content }}
-
-          &lt;/div>
-
-
-          ###
-          ### liquid-table.html layout
-          ###
-
-          ---
-          layout: nice-text
-          ---
-
-          &lbrace;&lbrace; content }}
-
-          #  liquid table starts here
-
-
-
-
-
-    ###
-    ###  LIQUID TABLE ADDED USING YAML DATA
-    ###
-    ###  liquid is a simple markup language that allows
-    ###  web designers to separate page layouts from
-    ###  page content without databases
-    ###
-    ###  &lbrace;%  function in liquid  %}
-    ###  &lbrace;&lbrace;  variable in liquid  }}
-    ###
-
-        ###
-        ###  YAML HEADER FOR PAGE
-        ###
-
-        ---
-        layout: liquid-table
-        title: 'amiright?'
-        reynolds:
-          strengths:
-          - good father
-          - funny
-          - dated alanis morissette
-          weaknesses: 
-          - singing
-          - green lantern movie
-          - tennis backhand 
-        gosling:
-          strengths: 
-          - builds houses
-          - is a real boy
-          - never dated alanis morissette
-          weaknesses: 
-          - micky mouse club
-          - cries a lot
-          - not ryan reynolds
-        ---
-
-       ###
-       ###  LIQUID TAG TABLE IN LAYOUT
-       ###
-       ###  HTML ELEMENTS: 
-       ###  &lt;thead> table header
-       ###  &lt;tr>  table row 
-       ###  &lt;td>  table cell (or data)
-       ###  &lt;ul> unordered list
-       ###  &lt;li> list item 
-       ###
-
-        &lt;h2> Ryan vs Ryan &lt;/h2>
-
-        &lt;table id="ryan-v-ryan">
-
-        &lt;thead>
-          &lt;tr>
-            &lt;th>  &lt;h3>  Ryan Reynolds  &lt;/h3>  &lt;/th>
-            &lt;th>  &lt;h3>  Ryan Gosling  &lt;/h3>  &lt;/th>
-          &lt;/tr>
-        &lt;/thead>
-
-        &lt;tbody>
-        &lt;tr>
-          &lt;td>
-            &lt;h4>  Strengths  &lt;/h4>
-            &lt;ul>
-
-              ###  LIQUID LOOPS WITH YAML DATA
-              ###  reynolds:
-              ###    strengths:
-              ###    - good father
-              ###    - funny
-              ###    - dated alanis morissette
-
-              &lbrace;% for item in page.reynolds.strengths %}
-                 &lt;li>  &lbrace;&lbrace; item }}  &lt;/li>
-              &lbrace;% endfor %}
-
-              ###    LIQUID LOOP CREATES HTML CODES:
-              ###    &lt;li> good father &lt;/li>
-              ###    &lt;li> funny &lt;/li>
-              ###    &lt;li> dated alanis morissette &lt;/li>        
-
-            &lt;/ul>
-            &lt;br>
-            &lt;h4>  Weaknessess  &lt;/h4>
-            &lt;ul>
-
-              &lbrace;% for item in page.reynolds.weaknesses %}
-                 &lt;li>  &lbrace;&lbrace; item }}  &lt;/li>
-              &lbrace;% endfor %}
-
-            &lt;/ul>  
-          &lt;/td>
-          &lt;td>
-            &lt;h4>  Strengths  &lt;/h4>
-            &lt;ul>
-
-              &lbrace;% for item in page.gosling.strengths %}
-                &lt;li>  &lbrace;&lbrace; item }}  &lt;/li>
-              &lbrace;% endfor %}
-
-            &lt;/ul>
-            &lt;br>
-            &lt;h4>  Weaknessess  &lt;/h4>
-            &lt;ul>
-
-              &lbrace;% for item in page.gosling.weaknesses %}
-                 &lt;li>  &lbrace;&lbrace; item }}  &lt;/li>
-              &lbrace;% endfor %}
-
-            &lt;/ul>
-          &lt;/td>
-        &lt;/tr> 
-        &lt;/table>
-
-</code>
-</pre>
-</blockquote>
-
-
-
-
+    </tbody>
+  </table>
+  {% endif %}
+</div>
 
 <style>
-  pre{
-  font-family: Consolas, Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace, serif;
-  margin-bottom: 10px;
-  padding: 5px;
-  background-color: #eee;
-  width: 750px!ie7;
-  padding-bottom: 20px!ie7;
-}
-
-ui {
-  padding-inline-start: 10px;
-  }
-  
-table {
-  margin-left: 20px;
-  }
-  
+  .liquid-table-wrapper { margin: 1rem 0; }
+  .liquid-table { width: 100%; border-collapse: collapse; margin: .5rem 0 2rem; }
+  .liquid-table th, .liquid-table td { border: 1px solid #ddd; padding: .5rem .75rem; vertical-align: top; }
+  .liquid-table thead th { text-align: left; }
+  .page-content img { max-width: 100%; height: auto; }
 </style>
-
