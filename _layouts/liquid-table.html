@@ -1,72 +1,72 @@
 ---
-layout: default   <!-- parent layout -->
+layout: default
 ---
 
 <div class="liquid-table-wrapper">
   {% if page.title %}<h1>{{ page.title }}</h1>{% endif %}
 
-  <!-- Render the page content (image + text from the .md file) -->
   <div class="page-content">
     {{ content }}
   </div>
 
-  <!-- Build a comparison table from front matter -->
   {% if page.reynolds or page.gosling %}
-  <h2>Comparison</h2>
+    <h2>Comparison</h2>
 
-  <!-- Strengths -->
-  {% assign r_str = page.reynolds.strengths | size %}
-  {% assign g_str = page.gosling.strengths | size %}
-  {% if r_str > g_str %}
+    {# STRENGTHS #}
+    {% assign r_str = 0 %}
+    {% if page.reynolds and page.reynolds.strengths %}
+      {% assign r_str = page.reynolds.strengths | size %}
+    {% endif %}
+    {% assign g_str = 0 %}
+    {% if page.gosling and page.gosling.strengths %}
+      {% assign g_str = page.gosling.strengths | size %}
+    {% endif %}
     {% assign max_str = r_str %}
-  {% else %}
-    {% assign max_str = g_str %}
-  {% endif %}
+    {% if g_str > r_str %}{% assign max_str = g_str %}{% endif %}
 
-  <h3>Strengths</h3>
-  <table class="liquid-table">
-    <thead>
-      <tr>
-        <th>Ryan Reynolds</th>
-        <th>Ryan Gosling</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for i in (0..max_str | minus: 1) %}
-      <tr>
-        <td>{{ page.reynolds.strengths[i] | default: "" }}</td>
-        <td>{{ page.gosling.strengths[i]  | default: "" }}</td>
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
+    {% if max_str > 0 %}
+      {% assign last_str = max_str | minus: 1 %}
+      <h3>Strengths</h3>
+      <table class="liquid-table">
+        <thead><tr><th>Ryan Reynolds</th><th>Ryan Gosling</th></tr></thead>
+        <tbody>
+          {% for i in (0..last_str) %}
+            <tr>
+              <td>{{ page.reynolds.strengths[i] | default: "" }}</td>
+              <td>{{ page.gosling.strengths[i]  | default: "" }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% endif %}
 
-  <!-- Weaknesses -->
-  {% assign r_weak = page.reynolds.weaknesses | size %}
-  {% assign g_weak = page.gosling.weaknesses | size %}
-  {% if r_weak > g_weak %}
+    {# WEAKNESSES #}
+    {% assign r_weak = 0 %}
+    {% if page.reynolds and page.reynolds.weaknesses %}
+      {% assign r_weak = page.reynolds.weaknesses | size %}
+    {% endif %}
+    {% assign g_weak = 0 %}
+    {% if page.gosling and page.gosling.weaknesses %}
+      {% assign g_weak = page.gosling.weaknesses | size %}
+    {% endif %}
     {% assign max_weak = r_weak %}
-  {% else %}
-    {% assign max_weak = g_weak %}
-  {% endif %}
+    {% if g_weak > r_weak %}{% assign max_weak = g_weak %}{% endif %}
 
-  <h3>Weaknesses</h3>
-  <table class="liquid-table">
-    <thead>
-      <tr>
-        <th>Ryan Reynolds</th>
-        <th>Ryan Gosling</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for i in (0..max_weak | minus: 1) %}
-      <tr>
-        <td>{{ page.reynolds.weaknesses[i] | default: "" }}</td>
-        <td>{{ page.gosling.weaknesses[i]  | default: "" }}</td>
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
+    {% if max_weak > 0 %}
+      {% assign last_weak = max_weak | minus: 1 %}
+      <h3>Weaknesses</h3>
+      <table class="liquid-table">
+        <thead><tr><th>Ryan Reynolds</th><th>Ryan Gosling</th></tr></thead>
+        <tbody>
+          {% for i in (0..last_weak) %}
+            <tr>
+              <td>{{ page.reynolds.weaknesses[i] | default: "" }}</td>
+              <td>{{ page.gosling.weaknesses[i]  | default: "" }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% endif %}
   {% endif %}
 </div>
 
