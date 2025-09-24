@@ -21,7 +21,7 @@ gosling:
     - not ryan reynolds
 ---
 
-![]({{ site.baseurl }}/img/ryan-v-ryan.jpg)
+![](img/ryan-v-ryan.jpg)
 
 ### Lorem Ipsum
 
